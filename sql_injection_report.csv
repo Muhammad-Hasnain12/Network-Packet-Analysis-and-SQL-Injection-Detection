@@ -1,0 +1,2 @@
+payload,is_sqli
+http://127.0.0.1/search?query=',1
