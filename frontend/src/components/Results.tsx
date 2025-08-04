@@ -60,7 +60,7 @@ export default function Results({ result }: ResultsProps) {
         </div>
 
         {/* File Info */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
             <div className="flex items-center mb-2">
               <FileText className="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2" />
@@ -82,14 +82,20 @@ export default function Results({ result }: ResultsProps) {
           <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
             <div className="flex items-center mb-2">
               <Clock className="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2" />
-              <span className="font-medium text-gray-900 dark:text-white">Status</span>
+              <span className="font-medium text-gray-900 dark:text-white">Packets</span>
             </div>
-            <p className={`text-sm font-medium ${
-              isDetected 
-                ? 'text-red-600 dark:text-red-400' 
-                : 'text-green-600 dark:text-green-400'
-            }`}>
-              {isDetected ? 'Threat Found' : 'Clean'}
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              {result.packetsAnalyzed || 'N/A'}
+            </p>
+          </div>
+          
+          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+            <div className="flex items-center mb-2">
+              <Shield className="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2" />
+              <span className="font-medium text-gray-900 dark:text-white">Confidence</span>
+            </div>
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              {result.confidence || 'N/A'}%
             </p>
           </div>
         </div>

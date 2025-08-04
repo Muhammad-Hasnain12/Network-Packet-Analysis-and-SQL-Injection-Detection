@@ -29,7 +29,7 @@ export default function FileUpload({ onResult }: FileUploadProps) {
     
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const droppedFile = e.dataTransfer.files[0];
-      if (droppedFile.name.endsWith('.pcap') || droppedFile.name.endsWith('.pcapng')) {
+      if (validateFile(droppedFile)) {
         setFile(droppedFile);
       }
     }
@@ -37,9 +37,31 @@ export default function FileUpload({ onResult }: FileUploadProps) {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+      const selectedFile = e.target.files[0];
+      if (validateFile(selectedFile)) {
+        setFile(selectedFile);
+      }
     }
   };
+
+  const validateFile = (file: File): boolean => {
+    // Check file type
+    if (!file.name.endsWith('.pcap') && !file.name.endsWith('.pcapng')) {
+      alert('Please select a .pcap or .pcapng file');
+      return false;
+    }
+    
+    // Check file size (max 100MB)
+    const maxSize = 100 * 1024 * 1024; // 100MB
+    if (file.size > maxSize) {
+      alert('File size must be less than 100MB');
+      return false;
+    }
+    
+    return true;
+  };
+
+
 
   const removeFile = () => {
     setFile(null);
