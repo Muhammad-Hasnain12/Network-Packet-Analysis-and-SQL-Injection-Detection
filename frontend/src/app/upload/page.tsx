@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from "react";
 import FileUpload from "../../components/FileUpload";
 import Results from "../../components/Results";

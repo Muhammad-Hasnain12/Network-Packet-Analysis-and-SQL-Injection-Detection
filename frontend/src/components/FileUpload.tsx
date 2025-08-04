@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from "react";
 
 type FileUploadProps = {
@@ -20,15 +22,20 @@ export default function FileUpload({ onResult }: FileUploadProps) {
     const formData = new FormData();
     formData.append("file", file);
 
-    // Replace with your backend API endpoint
-    const res = await fetch("/api/analyze", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      // Replace with your backend API endpoint
+      const res = await fetch("/api/analyze", {
+        method: "POST",
+        body: formData,
+      });
 
-    const data = await res.json();
-    setLoading(false);
-    onResult(data);
+      const data = await res.json();
+      setLoading(false);
+      onResult(data);
+    } catch (error) {
+      setLoading(false);
+      onResult({ error: "Failed to analyze file" });
+    }
   };
 
   return (
@@ -46,8 +53,8 @@ export default function FileUpload({ onResult }: FileUploadProps) {
       />
       <button
         type="submit"
-        className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition"
-        disabled={loading}
+        className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition disabled:opacity-50"
+        disabled={loading || !file}
       >
         {loading ? "Analyzing..." : "Upload & Analyze"}
       </button>
